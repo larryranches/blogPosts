@@ -51,7 +51,7 @@ class PostsShow extends Component {
           <Text style={styles.text}>{ post.content }</Text> 
         </Text>
         <TouchableHighlight style={styles.button} onPress={this.onDeleteClick.bind(this)} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>Delete</Text>
         </TouchableHighlight>         
       </View>
     );
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 36,
-    backgroundColor: '#48BBEC',
+    backgroundColor: 'red',
     borderColor: '#48BBEC',
     borderWidth: 1,
     borderRadius: 8,
