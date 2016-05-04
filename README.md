@@ -22,4 +22,6 @@ Change the key below to anything you want in the actions/index.js file to start 
 
 To Do/Wish List
 - [ ] Automatically reload Index view
+- [ ] Make it work for Android
+- [ ] Need to handle keyboard container
 - [ ] Write Tests
