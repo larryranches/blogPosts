@@ -2,8 +2,6 @@
 #
 .DS_Store
 
-.vscode
-
 # Xcode
 #
 build/
