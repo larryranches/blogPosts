@@ -4,10 +4,7 @@ import React, {
   Text,
   View,
   TouchableHighlight,
-  Alert,
-  DeviceEventEmitter,
-  Dimensions,
-  LayoutAnimation
+  Alert
 } from 'react-native';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
@@ -37,38 +34,6 @@ const options = {
 }
 
 class PostsNew extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      visibleHeight: null
-    }
-  }
-
-  componentWillMount () {
-    this.keyboardDidShowListener = DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
-    this.keyboardDidHideListener = DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
-  }
-
-  componentWillUnmount () {
-    this.keyboardDidShowListener.remove()
-    this.keyboardDidHideListener.remove()
-  }
-
-  keyboardDidShow (e) {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    let newSize = Dimensions.get('window').height - e.endCoordinates.height
-    this.setState({
-      visibleHeight: newSize
-    })
-  }
-
-  keyboardDidHide (e) {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    this.setState({
-      visibleHeight: Dimensions.get('window').height
-    })
-  }
 
   onPress() {
     var formValue = this.refs.form.getValue();
@@ -88,7 +53,7 @@ class PostsNew extends Component {
 
   render() {
     return (
-      <View style={[styles.container, {height: this.state.visibleHeight}]}>
+      <View style={styles.container}>
         <Form
           ref="form"
           type={Book}
@@ -104,9 +69,9 @@ class PostsNew extends Component {
 
 var styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: 'center',
     padding: 20,
-    paddingTop: 200,
     backgroundColor: '#ffffff',
   },
   title: {
