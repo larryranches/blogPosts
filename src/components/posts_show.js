@@ -8,7 +8,7 @@ import React, {
   Alert
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchPost, deletePost } from '../actions/index';
+import { fetchPost, fetchPosts, deletePost } from '../actions/index';
 import { Actions } from 'react-native-router-flux';
 
 
@@ -16,43 +16,43 @@ class PostsShow extends Component {
   componentWillMount() {
     this.props.fetchPost(this.props.bookId);
   }
-  
+
   onDeleteClick() {
     this.props.deletePost(this.props.bookId)
       .then(() => {
-        const alertTitle = this.props.post.title + " has been Deleted!"; 
+        const alertTitle = this.props.post.title + " has been Deleted!";
         Alert.alert(alertTitle, 'Please refresh Book Index to update data', [
-          {text: 'OK', onPress: () => Actions.pop()}
-        ]);        
+          {text: 'OK', onPress: () => Actions.pop({ props: this.props.fetchPosts() }) }
+        ]);
       });
-  }  
+  }
 
   render() {
     const { post } = this.props;
-    
+
     if(!post) {
       return <View style={styles.container}><Text>Loading...</Text></View>
     }
-    
+
     console.log(post);
-    
+
     return (
       <View style={styles.container}>
         <Text style={styles.dataDisplay}>
           <Text style={styles.label}>ID:  </Text>
           <Text style={styles.text}>{ post.id }</Text>
-        </Text>        
-        <Text style={styles.dataDisplay}>        
-          <Text style={styles.label}>Categories:  </Text>
-          <Text style={styles.text}>{ post.categories }</Text> 
         </Text>
-        <Text style={styles.dataDisplay}>        
-          <Text style={styles.label}>Content:  </Text> 
-          <Text style={styles.text}>{ post.content }</Text> 
+        <Text style={styles.dataDisplay}>
+          <Text style={styles.label}>Categories:  </Text>
+          <Text style={styles.text}>{ post.categories }</Text>
+        </Text>
+        <Text style={styles.dataDisplay}>
+          <Text style={styles.label}>Content:  </Text>
+          <Text style={styles.text}>{ post.content }</Text>
         </Text>
         <TouchableHighlight style={styles.button} onPress={this.onDeleteClick.bind(this)} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Delete</Text>
-        </TouchableHighlight>         
+        </TouchableHighlight>
       </View>
     );
   }
@@ -97,5 +97,4 @@ function mapStateToProps(state) {
   return { post: state.posts.post };
 }
 
-export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow);
-
+export default connect(mapStateToProps, { fetchPost, fetchPosts, deletePost })(PostsShow);

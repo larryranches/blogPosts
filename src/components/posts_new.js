@@ -9,7 +9,7 @@ import React, {
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { createPost } from '../actions/index';
+import { createPost, fetchPosts } from '../actions/index';
 
 var Form = t.form.Form;
 
@@ -45,7 +45,7 @@ class PostsNew extends Component {
         .then(() => {
           const alertTitle = formValue.title + " has been Added!";
           Alert.alert(alertTitle, 'Please refresh Book Index to update data', [
-            {text: 'OK', onPress: () => Actions.pop()}
+            {text: 'OK', onPress: () => Actions.pop({ props: this.props.fetchPosts() }) }
           ]);
         })
     }
@@ -96,4 +96,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default connect(null, { createPost })(PostsNew);
+export default connect(null, { createPost, fetchPosts })(PostsNew);
