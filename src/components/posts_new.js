@@ -4,11 +4,14 @@ import React, {
   Text,
   View,
   TouchableHighlight,
-  Alert
+  Alert,
+  DeviceEventEmitter,
+  Dimensions,
+  LayoutAnimation
 } from 'react-native';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux'; 
+import { Actions } from 'react-native-router-flux';
 import { createPost } from '../actions/index';
 
 var Form = t.form.Form;
@@ -34,26 +37,58 @@ const options = {
 }
 
 class PostsNew extends Component {
-  
+  constructor() {
+    super();
+
+    this.state = {
+      visibleHeight: null
+    }
+  }
+
+  componentWillMount () {
+    this.keyboardDidShowListener = DeviceEventEmitter.addListener('keyboardDidShow', this.keyboardDidShow.bind(this))
+    this.keyboardDidHideListener = DeviceEventEmitter.addListener('keyboardDidHide', this.keyboardDidHide.bind(this))
+  }
+
+  componentWillUnmount () {
+    this.keyboardDidShowListener.remove()
+    this.keyboardDidHideListener.remove()
+  }
+
+  keyboardDidShow (e) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    let newSize = Dimensions.get('window').height - e.endCoordinates.height
+    this.setState({
+      visibleHeight: newSize
+    })
+  }
+
+  keyboardDidHide (e) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
+    this.setState({
+      visibleHeight: Dimensions.get('window').height
+    })
+  }
+
   onPress() {
     var formValue = this.refs.form.getValue();
-    
+
     if (formValue) {
       console.log(formValue);
-      
+
       this.props.createPost(formValue)
         .then(() => {
-          const alertTitle = formValue.title + " has been Added!"; 
+          const alertTitle = formValue.title + " has been Added!";
           Alert.alert(alertTitle, 'Please refresh Book Index to update data', [
             {text: 'OK', onPress: () => Actions.pop()}
-          ]);        
+          ]);
         })
     }
   }
-  
+
   render() {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, {height: this.state.visibleHeight}]}>
         <Form
           ref="form"
           type={Book}
@@ -61,7 +96,7 @@ class PostsNew extends Component {
         />
         <TouchableHighlight style={styles.button} onPress={this.onPress.bind(this)} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
-        </TouchableHighlight>      
+        </TouchableHighlight>
       </View>
     );
   }
@@ -69,9 +104,9 @@ class PostsNew extends Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     padding: 20,
+    paddingTop: 200,
     backgroundColor: '#ffffff',
   },
   title: {
@@ -97,4 +132,3 @@ var styles = StyleSheet.create({
 });
 
 export default connect(null, { createPost })(PostsNew);
-
