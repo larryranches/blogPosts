@@ -21,7 +21,7 @@ Change the key below to anything you want in the actions/index.js file to start 
 
 
 To Do/Wish List
-- [ x ] Automatically reload Index view - Done!
+- [x] Automatically reload Index view - Done!
 - [ ] Make it work for Android
 - [ ] Need to handle keyboard container - Had a fix but it messed up the T-Comb form :(
 - [ ] Write Tests
