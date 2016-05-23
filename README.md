@@ -1,8 +1,8 @@
 # blogPosts
 
-![](https://github.com/slayrbear/blogPosts/blob/master/blogPostsSS.png?raw=true)
+This project serves as a template for implementing Redux in a React Native app as well as configuring Scenes/Routes. It's pretty well structured to serve as a foundation for any app. 
 
-This project serves as a template for implementing Redux in a React Native app as well as configuring Scenes/Routes. It's pretty well structured to serve as a foundation for any app.
+![](https://github.com/slayrbear/blogPosts/blob/master/blogPostsSS.png?raw=true)
 
 This app is based upon an example from Stephen Griders course on React and Redux meant for Web Apps that I ported over to React Native. He has amazing courses on React and Redux as well as React Native. Link Below.
 
